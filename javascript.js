@@ -14,4 +14,41 @@ function divide(a, b) {
   return a / b;
 };
 
+// create variable for num1, num 2, operator
 
+let num1;
+let num2;
+let op;
+
+function operator(op, n1, n2){
+    switch (op){
+        case '+':
+            add(n1, n2)
+            break
+        case '-':
+            subtract(n1, n2)
+            break
+        case '*':
+            multiply(n1, n2)
+            break
+        case '/':
+            divide(n1, n2)
+            break
+    }
+}
+
+// create calculator layout 
+    // 1 div on top for display
+    // 1 div on bottom for buttons
+    // wrap 4 x 4 buttons 
+
+const container = document.querySelector('.container');
+
+const display = document.createElement('div');
+display.classList.add('display');
+
+const buttonArea = document.createElement('div');
+buttonArea.classList.add('buttonArea');
+
+container.appendChild(display);
+container.appendChild(buttonArea);

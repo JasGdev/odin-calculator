@@ -1,0 +1,11 @@
+.display{
+    background-color: rgb(0, 0, 0);
+    width: 100px;
+    height: 100px;
+}
+
+.container{
+    background-color: aqua;
+    width: 100px;
+    height: 100px;
+}
