@@ -28,7 +28,9 @@ Extra
 
     Use button color to show storage status
 
-    Stores when empty whatever is on display
+    Stores whatever is on display
+    
+        if empty store 0
 
     When full
 

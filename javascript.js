@@ -54,6 +54,8 @@ let op = '';
 
 let state = 1;
 let tempValue = '';
+let storing = false;
+let storedValue = 0;
 
 function overflowFix(){
 // for overflow
@@ -213,6 +215,24 @@ function inputUpdate(){
                 logState();
             }) 
         }
+
+        // memory implementation
+            // if not storing 
+                // store what is on screen in any state
+                // if screen is empty store 0
+            // if storing
+                // output if screen value is empty
+                // store  if not 
+        else if (button.classList.contains('memBtn')){
+            button.addEventListener('click', () => {
+                if (!storing && tempValue == ''){
+
+                }
+                clickButtonByClassName('memBtn');
+                logState();
+                button.classList.add("storing");
+            }) 
+        }
         
     })
 
@@ -290,7 +310,11 @@ document.addEventListener("keydown", (e) => {
         
         e.preventDefault();
     }
-
+    
+    // clear active buttons
+    document
+    .querySelectorAll(".is-active")
+    .forEach(btn => btn.classList.remove("is-active"));
 
     switch (e.key) {
         case "Enter":
@@ -320,3 +344,4 @@ document.addEventListener("keydown", (e) => {
     
 }
 )
+//#endregion
