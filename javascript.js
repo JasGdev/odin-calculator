@@ -1,6 +1,6 @@
-let num1;
-let num2;
-let op;
+let num1 = 0;
+let num2 = 0;
+let op = '';
 
 // State logic
     // 1 : currently inputting num1
@@ -60,32 +60,45 @@ function inputUpdate(){
         if (button.classList.contains('numBtn')){
                 button.addEventListener('click', () => {
                     display.textContent +=  button.textContent;
-                    console.log(state)
+                    tempValue += button.textContent;
+                    console.group("Calculator State");
+                    console.log("state:", state);
+                    console.log("tempValue:", tempValue);
+                    console.log("num1:", num1);
+                    console.log("num2:", num2);
+                    console.log("op:", op);
+                    console.groupEnd();
             })
         } 
         else if (button.classList.contains('opBtn')){
             button.addEventListener('click', () => {
                 if (state == 1){
                     display.textContent += button.textContent;
+                    state = 2;
+                    tempValue = '';
                 }
-                state = 2;
-                console.log(state)
+                console.log(`state:${state} tempValue:${tempValue} num1:${num1} 
+                        num2:${num2} op:${op}`)
             }) 
         } 
         else if (button.classList.contains('eqBtn')){
             button.addEventListener('click', () => {
                 if (state == 2 && tempValue != ''){
                     display.textContent += button.textContent;
+                    state = 1;
+                    tempValue = '';
                 }
-                state = 1;
-                console.log(state)
+                console.log(`state:${state} tempValue:${tempValue} num1:${num1} 
+                        num2:${num2} op:${op}`)
             }) 
         } 
         else if (button.classList.contains('clearBtn')){
             button.addEventListener('click', () => {
                 display.textContent = ''
                 state = 1;
-                console.log(state)
+                tempValue = '';
+                console.log(`state:${state} tempValue:${tempValue} num1:${num1} 
+                        num2:${num2} op:${op}`)
             }) 
         }
         
