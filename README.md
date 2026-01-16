@@ -9,6 +9,8 @@ Extra from Odin Project
 
 3. button for decimal .
 4. backspace
+
+        If on result screen, clears screen
 5. keyboard support
     
         As is (1 to 0, -, +, /, x, .)
@@ -18,9 +20,6 @@ Extra from Odin Project
         C (c key)
         +- (n key)
         M (m key)
-
-
-
 
 Extra
 

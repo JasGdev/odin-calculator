@@ -192,8 +192,9 @@ function inputUpdate(){
 
         else if (button.classList.contains('backBtn')){
             button.addEventListener('click', () => {
-                if (!tempValue.includes('')){
-                    updateState(button);
+                if (tempValue != ''){
+                    display.textContent =  display.textContent.slice(0, -1);
+                    tempValue = tempValue.textContent.slice(0, -1);
                 }
                 logState();
             }) 
