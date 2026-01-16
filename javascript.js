@@ -42,10 +42,14 @@ let op = '';
         // from here can only accept operators and numbers
     // 2 : currently inputting num2
         // from here can only accept equals and numbers
+    // 3 : currently display result
+        // from here can enter number to start a new operation, or operator
 
     //State transitions
         // operator => 2
-        // equals, clear => 1
+        // clear => 1
+        // equals => 3
+        // number if 3 => 1
 
 let state = 1;
 let tempValue = '';
@@ -71,16 +75,26 @@ function inputUpdate(){
     buttons.forEach(button => {
         if (button.classList.contains('numBtn')){
                 button.addEventListener('click', () => {
-                    display.textContent +=  button.textContent;
-                    tempValue += button.textContent;
-                    logState();
+                    if (state != 3){
+                        display.textContent +=  button.textContent;
+                        tempValue += button.textContent;
+                        logState();
+                    } else {
+                        // coming from result
+                        document.getElementsByClassName('clearBtn')[0].dispatchEvent(new Event('click'))
+                        
+                        display.textContent += button.textContent;
+                        tempValue += button.textContent;
+                        logState();
+                    }
+                    
                     
             })
             
         } 
         else if (button.classList.contains('opBtn')){
             button.addEventListener('click', () => {
-                if (state == 1 && tempValue != ''){
+                if (state != 2 && tempValue != ''){
                     display.textContent += button.textContent;
                     state = 2;
                     num1 = Number(tempValue)
@@ -94,29 +108,32 @@ function inputUpdate(){
         else if (button.classList.contains('eqBtn')){
             button.addEventListener('click', () => {
                 if (state == 2 && tempValue != ''){
-                    state = 1;
+                    state = 3;
                     num2 = Number(tempValue)
                     
-                    
-                    let result = operator(num1, op, num2);
                     // perform operation
+                    let result = operator(num1, op, num2);
+                    
+                    // update display
                     display.textContent = result;
-                    let historyDisplay = `${num1} ${op} ${num2} =`;
+                    historyDisplay.textContent = `${num1} ${op} ${num2} =`;
 
                     // reset op, num2 and set num 1 = operation result
                     num1 = result;
                     num2 = 0;
                     op = '';
                     tempValue = num1;
+                    console.log(historyDisplay)
                 }
                 logState();
-                console.log(historyDisplay)
+                
                 
             }) 
         } 
         else if (button.classList.contains('clearBtn')){
             button.addEventListener('click', () => {
-                display.textContent = ''
+                display.textContent = '';
+                historyDisplay.textContent = '';
                 state = 1;
                 num1 = 0;
                 num2 = 0;
@@ -143,12 +160,16 @@ function inputUpdate(){
 
 const container = document.querySelector('.container');
 
+const historyDisplay = document.createElement('div');
+historyDisplay.classList.add('historyDisplay');
+
 const display = document.createElement('div');
 display.classList.add('display');
 
 const buttonArea = document.createElement('div');
 buttonArea.classList.add('buttonArea');
 
+container.appendChild(historyDisplay)
 container.appendChild(display);
 container.appendChild(buttonArea);
 
