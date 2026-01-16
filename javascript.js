@@ -50,6 +50,8 @@ let op = '';
         // equals => 3
         // number if 3 => 1
 
+    
+
 let state = 1;
 let tempValue = '';
 
@@ -70,6 +72,10 @@ function overflowFix(){
 
 }
 
+function updateState(button){
+    display.textContent +=  button.textContent;
+    tempValue += button.textContent;
+}
 
 
 function logState(){
@@ -93,15 +99,13 @@ function inputUpdate(){
         if (button.classList.contains('numBtn')){
                 button.addEventListener('click', () => {
                     if (state != 3 && display.textContent.length < 18){
-                        display.textContent +=  button.textContent;
-                        tempValue += button.textContent;
+                        updateState(button)
                         logState();
                         } 
                     else if (state == 3) {
                         // coming from result
                         document.getElementsByClassName('clearBtn')[0].dispatchEvent(new Event('click'))
-                        display.textContent += button.textContent;
-                        tempValue += button.textContent;
+                        updateState(button)
                         logState();
                         }
                     
@@ -169,6 +173,18 @@ function inputUpdate(){
                 logState();
             }) 
         }
+        // . decimal implementation
+            // able to used in all states as long as current display value is not empty
+            // only able to be used if no other decimal tempValue
+        
+        else if (button.classList.contains('decimalBtn')){
+            button.addEventListener('click', () => {
+                if (!tempValue.includes('.')){
+                    updateState(button);
+                }
+                logState();
+            }) 
+        }
         
     })
 
@@ -218,27 +234,15 @@ buttons.forEach(val => {
         btn.classList.add('eqBtn')
     } else if (val === 'C') {
         btn.classList.add('clearBtn')
-    } else if (val === '^') {
-        btn.classList.add('powerOfBtn')
-    } else if (val === '🗒') {
-        btn.classList.add('storeBtn')
-    } else if (val === '⌫') {
+    } else if (val === 'MS') {
+        btn.classList.add('memBtn')
+    } else if (val === '<=') {
         btn.classList.add('backBtn')
-    } else if (val === 'x²') {
-        btn.classList.add('squaredBtn')
-    } else if (val === '√') {
-        btn.classList.add('squareRootBtn')
-    } else if (val === '1/x') {
-        btn.classList.add('reciprocalBtn')
     } else if (val === '±') {
         btn.classList.add('minusPosBtn')
     } else if (val === '.') {
         btn.classList.add('decimalBtn')
     }
-
-
-
-
     btn.textContent = val;
     buttonArea.appendChild(btn);
 });
