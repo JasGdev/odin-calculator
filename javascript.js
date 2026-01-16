@@ -77,6 +77,9 @@ function updateState(button){
     tempValue += button.textContent;
 }
 
+function clickButtonByClassName(name){
+    document.getElementsByClassName(name)[0].dispatchEvent(new Event('click'))
+}
 
 function logState(){
     console.group("Calculator State");
@@ -104,8 +107,8 @@ function inputUpdate(){
                         } 
                     else if (state == 3) {
                         // coming from result
-                        document.getElementsByClassName('clearBtn')[0].dispatchEvent(new Event('click'))
-                        updateState(button)
+                        clickButtonByClassName('clearBtn');
+                        updateState(button);
                         logState();
                         }
                     
@@ -192,9 +195,13 @@ function inputUpdate(){
 
         else if (button.classList.contains('backBtn')){
             button.addEventListener('click', () => {
-                if (tempValue != ''){
+                if (tempValue != '' && state != 3){
                     display.textContent =  display.textContent.slice(0, -1);
-                    tempValue = tempValue.textContent.slice(0, -1);
+                    tempValue = tempValue.slice(0, -1);
+                    console.log(tempValue)
+                    console.log(typeof tempValue)
+                } else{
+                    clickButtonByClassName('clearBtn');
                 }
                 logState();
             }) 
@@ -207,8 +214,6 @@ function inputUpdate(){
 
 }
 //#endregion
-
-
 
 //#region Calculator UI
     // 1 div on top for display
@@ -265,3 +270,15 @@ display.textContent = '';
 
 inputUpdate();
 //#endregion
+
+//#region Keyboard Support
+document.addEventListener("keydown", (e) => {
+  switch (e.key) {
+    case "Enter":
+    case "=":
+      handleEquals();
+      e.preventDefault();
+      break;
+    }
+}
+)
