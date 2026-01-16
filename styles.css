@@ -8,17 +8,35 @@
     align-items: end;
     font-size: 85px;
     font-family: -apple-system, sans-serif;
-
+    font-weight: bold;
 }
 
 .container{
     background-color: rgb(0, 0, 0);
     width: 400px;
     height: 500px;
+
 }
 
-.calcBtn{
+.numBtn, 
+.opBtn, 
+.clearBtn, 
+.eqBtn  {
     background-color: rgb(228, 228, 228);
     width: 100px;
     height: 100px;
+    font-size: 45px;
+    font-weight: bold;
+    transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.08s ease;
+}
+
+.numBtn:active,
+.opBtn:active,
+.clearBtn:active,
+.eqBtn:active {
+    background-color: rgb(0, 0, 0);
+    color: aliceblue;    
 }

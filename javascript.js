@@ -1,3 +1,8 @@
+let num1;
+let num2;
+let op;
+
+//#region Calculator Functions
 function add(a, b) {
 	return a + b;
 };
@@ -13,12 +18,6 @@ function multiply(a, b) {
 function divide(a, b) {
   return a / b;
 };
-
-// create variable for num1, num 2, operator
-
-let num1;
-let num2;
-let op;
 
 function operator(op, n1, n2){
     switch (op){
@@ -37,6 +36,46 @@ function operator(op, n1, n2){
     }
 }
 
+// updates num1, num2 and op as the buttons are clicked
+    //also updates the display
+    //display text format is `{num1} {op} {num2} = {operator(op, num1, num2}' 
+        //when equal sign or another operator is clicked 
+            // evaluate the expression set n1 = result, all other black
+function inputUpdate(){
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(button => {
+        if (button.classList.contains('numBtn')){
+                button.addEventListener('click', () => {
+                    display.textContent +=  button.textContent;
+            })
+        } 
+        else if (button.classList.contains('opBtn')){
+            button.addEventListener('click', () => {
+                display.textContent += button.textContent;
+            }) 
+        } 
+        else if (button.classList.contains('eqBtn')){
+            button.addEventListener('click', () => {
+                display.textContent +=  button.textContent;
+            }) 
+        } 
+        else if (button.classList.contains('clearBtn')){
+            button.addEventListener('click', () => {
+                display.textContent = ''
+            }) 
+        }
+        
+    })
+
+    
+    
+
+}
+
+//#endregion
+
+//#region Calculator UI
+
 // create calculator layout 
     // 1 div on top for display
     // 1 div on bottom for buttons
@@ -54,17 +93,28 @@ container.appendChild(display);
 container.appendChild(buttonArea);
 
 const buttons = [
-  "7", "8", "9", "÷",
-  "4", "5", "6", "×",
+  "7", "8", "9", "/",
+  "4", "5", "6", "x",
   "1", "2", "3", "−",
   "C", "0", "=", "+"
 ];
 
 buttons.forEach(val => {
     const btn = document.createElement('button');
-    btn.classList.add('calcBtn');
+    if (Number.isInteger(Number(val))){
+        btn.classList.add('numBtn');
+    } else if (['/', 'x', '-', '+'].includes(val)){
+        btn.classList.add('opBtn')
+    } else if (val === '='){
+        btn.classList.add('eqBtn')
+    } else {
+        btn.classList.add('clearBtn')
+    }
     btn.textContent = val;
     buttonArea.appendChild(btn);
 });
 
-display.textContent = 'ass'
+display.textContent = '1221';
+
+inputUpdate();
+//#endregion
