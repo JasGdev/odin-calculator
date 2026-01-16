@@ -54,6 +54,24 @@ let op = '';
 let state = 1;
 let tempValue = '';
 
+function overflowFix(){
+// for overflow
+    if (historyDisplay.textContent.length > 37){
+        historyDisplay.style.fontSize = "15px";
+    } else {
+        historyDisplay.style.fontSize = "20px";
+    }
+
+    
+    if (display.textContent.length > 17){
+        display.style.fontSize = "35px";
+    } else {
+        display.style.fontSize = "40px";
+    }
+
+}
+
+
 
 function logState(){
     console.group("Calculator State");
@@ -75,18 +93,20 @@ function inputUpdate(){
     buttons.forEach(button => {
         if (button.classList.contains('numBtn')){
                 button.addEventListener('click', () => {
-                    if (state != 3){
+                    if (state != 3 && display.textContent.length < 18){
                         display.textContent +=  button.textContent;
                         tempValue += button.textContent;
                         logState();
-                    } else {
+                        } 
+                    else if (state == 3) {
                         // coming from result
                         document.getElementsByClassName('clearBtn')[0].dispatchEvent(new Event('click'))
-                        
                         display.textContent += button.textContent;
                         tempValue += button.textContent;
                         logState();
-                    }
+                        }
+                    
+                    
                     
                     
             })
@@ -95,11 +115,16 @@ function inputUpdate(){
         else if (button.classList.contains('opBtn')){
             button.addEventListener('click', () => {
                 if (state != 2 && tempValue != ''){
-                    display.textContent += button.textContent;
+                    
+                    display.textContent = '';
                     state = 2;
                     num1 = Number(tempValue)
                     op = button.textContent
                     tempValue = '';
+                    historyDisplay.textContent = `${num1} ${op}`;
+                    overflowFix()
+
+                    
                     
                 }
                 logState();
@@ -123,7 +148,8 @@ function inputUpdate(){
                     num2 = 0;
                     op = '';
                     tempValue = num1;
-                    console.log(historyDisplay)
+                    
+                    overflowFix()
                 }
                 logState();
                 
@@ -133,7 +159,9 @@ function inputUpdate(){
         else if (button.classList.contains('clearBtn')){
             button.addEventListener('click', () => {
                 display.textContent = '';
+                display.style.fontSize = '40px';
                 historyDisplay.textContent = '';
+                historyDisplay.style.fontSize = "20px"
                 state = 1;
                 num1 = 0;
                 num2 = 0;
