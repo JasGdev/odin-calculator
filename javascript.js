@@ -179,7 +179,20 @@ function inputUpdate(){
         
         else if (button.classList.contains('decimalBtn')){
             button.addEventListener('click', () => {
-                if (!tempValue.includes('.')){
+                if (!tempValue.includes('.') && tempValue != ''){
+                    updateState(button);
+                }
+                logState();
+            }) 
+        }
+
+        // back implementation
+            // in state 1/2 able to be used if current display is non empty
+            // in state 3 
+
+        else if (button.classList.contains('backBtn')){
+            button.addEventListener('click', () => {
+                if (!tempValue.includes('')){
                     updateState(button);
                 }
                 logState();
