@@ -15,7 +15,7 @@ let op = '';
 let state = 1;
 let tempValue = '';
 
-//#region Calculator Functions
+//#region Calculation Functions
 function add(a, b) {
 	return a + b;
 };
@@ -49,6 +49,19 @@ function operator(op, n1, n2){
     }
 }
 
+//#endregion
+
+//#region Calculator Functions
+function logState(){
+    console.group("Calculator State");
+                    console.log("state:", state);
+                    console.log("tempValue:", tempValue);
+                    console.log("num1:", num1);
+                    console.log("num2:", num2);
+                    console.log("op:", op);
+                    console.groupEnd();
+}
+
     // updates num1, num2 and op as the buttons are clicked
         //also updates the display
         //display text format is `{num1} {op} {num2} = {operator(op, num1, num2}' 
@@ -61,14 +74,10 @@ function inputUpdate(){
                 button.addEventListener('click', () => {
                     display.textContent +=  button.textContent;
                     tempValue += button.textContent;
-                    console.group("Calculator State");
-                    console.log("state:", state);
-                    console.log("tempValue:", tempValue);
-                    console.log("num1:", num1);
-                    console.log("num2:", num2);
-                    console.log("op:", op);
-                    console.groupEnd();
+                    logState();
+                    
             })
+            
         } 
         else if (button.classList.contains('opBtn')){
             button.addEventListener('click', () => {
@@ -77,8 +86,7 @@ function inputUpdate(){
                     state = 2;
                     tempValue = '';
                 }
-                console.log(`state:${state} tempValue:${tempValue} num1:${num1} 
-                        num2:${num2} op:${op}`)
+                logState();
             }) 
         } 
         else if (button.classList.contains('eqBtn')){
@@ -88,8 +96,7 @@ function inputUpdate(){
                     state = 1;
                     tempValue = '';
                 }
-                console.log(`state:${state} tempValue:${tempValue} num1:${num1} 
-                        num2:${num2} op:${op}`)
+                logState();
             }) 
         } 
         else if (button.classList.contains('clearBtn')){
@@ -97,8 +104,7 @@ function inputUpdate(){
                 display.textContent = ''
                 state = 1;
                 tempValue = '';
-                console.log(`state:${state} tempValue:${tempValue} num1:${num1} 
-                        num2:${num2} op:${op}`)
+                logState();
             }) 
         }
         
@@ -109,7 +115,7 @@ function inputUpdate(){
 
 }
 
-//#endregion
+
 
 //#region Calculator UI
     // 1 div on top for display
