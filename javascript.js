@@ -15,6 +15,12 @@ function divide(a, b) {
   return a / b;
 };
 
+
+
+//#endregion
+
+//#region Logic Implementation
+
 function operator(op, n1, n2){
     switch (op){
         case '+':
@@ -31,10 +37,6 @@ function operator(op, n1, n2){
             break
     }
 }
-
-//#endregion
-
-//#region Logic Implementation
 let num1 = 0;
 let num2 = 0;
 let op = '';
@@ -82,7 +84,7 @@ function inputUpdate(){
         } 
         else if (button.classList.contains('opBtn')){
             button.addEventListener('click', () => {
-                if (state == 1){
+                if (state == 1 && tempValue != ''){
                     display.textContent += button.textContent;
                     state = 2;
                     num1 = Number(tempValue)
@@ -96,10 +98,16 @@ function inputUpdate(){
         else if (button.classList.contains('eqBtn')){
             button.addEventListener('click', () => {
                 if (state == 2 && tempValue != ''){
-                    display.textContent += button.textContent;
                     state = 1;
                     num2 = Number(tempValue)
-                    tempValue = '';
+                    // perform operation
+                    display.textContent = num1 + num2;
+
+                    // reset op, num2 and set num 1 = operation result
+                    num1 = num1 + num2;
+                    num2 = 0;
+                    op = '';
+                    tempValue = num1;
                 }
                 logState();
             }) 
@@ -111,6 +119,7 @@ function inputUpdate(){
                 num1 = 0;
                 num2 = 0;
                 tempValue = '';
+                op = '';
                 logState();
             }) 
         }
@@ -144,7 +153,7 @@ container.appendChild(buttonArea);
 const buttons = [
   "7", "8", "9", "/",
   "4", "5", "6", "x",
-  "1", "2", "3", "−",
+  "1", "2", "3", "-",
   "C", "0", "=", "+"
 ];
 
@@ -152,7 +161,7 @@ buttons.forEach(val => {
     const btn = document.createElement('button');
     if (Number.isInteger(Number(val))){
         btn.classList.add('numBtn');
-    } else if (['/', 'x', '−', '+'].includes(val)){
+    } else if (['/', 'x', '-', '+'].includes(val)){
         btn.classList.add('opBtn')
     } else if (val === '='){
         btn.classList.add('eqBtn')
