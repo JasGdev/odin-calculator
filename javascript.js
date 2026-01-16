@@ -74,7 +74,7 @@ function inputUpdate(){
         } 
         else if (button.classList.contains('eqBtn')){
             button.addEventListener('click', () => {
-                if (state == 2){
+                if (state == 2 && tempValue != ''){
                     display.textContent += button.textContent;
                 }
                 state = 1;
@@ -125,7 +125,7 @@ buttons.forEach(val => {
     const btn = document.createElement('button');
     if (Number.isInteger(Number(val))){
         btn.classList.add('numBtn');
-    } else if (['/', 'x', '-', '+'].includes(val)){
+    } else if (['/', 'x', '−', '+'].includes(val)){
         btn.classList.add('opBtn')
     } else if (val === '='){
         btn.classList.add('eqBtn')
