@@ -16,7 +16,6 @@ function divide(a, b) {
 };
 
 
-
 //#endregion
 
 //#region Logic Implementation
@@ -202,10 +201,11 @@ container.appendChild(display);
 container.appendChild(buttonArea);
 
 const buttons = [
-  "7", "8", "9", "/",
-  "4", "5", "6", "x",
-  "1", "2", "3", "-",
-  "C", "0", "=", "+"
+  "MS", "C", "<=", "/",
+  "7", "8", "9", "x",
+  "4", "5", "6", "-",
+  "1", "2", "3", "+",
+  "±", "0", ".", "="
 ];
 
 buttons.forEach(val => {
@@ -216,9 +216,29 @@ buttons.forEach(val => {
         btn.classList.add('opBtn')
     } else if (val === '='){
         btn.classList.add('eqBtn')
-    } else {
+    } else if (val === 'C') {
         btn.classList.add('clearBtn')
+    } else if (val === '^') {
+        btn.classList.add('powerOfBtn')
+    } else if (val === '🗒') {
+        btn.classList.add('storeBtn')
+    } else if (val === '⌫') {
+        btn.classList.add('backBtn')
+    } else if (val === 'x²') {
+        btn.classList.add('squaredBtn')
+    } else if (val === '√') {
+        btn.classList.add('squareRootBtn')
+    } else if (val === '1/x') {
+        btn.classList.add('reciprocalBtn')
+    } else if (val === '±') {
+        btn.classList.add('minusPosBtn')
+    } else if (val === '.') {
+        btn.classList.add('decimalBtn')
     }
+
+
+
+
     btn.textContent = val;
     buttonArea.appendChild(btn);
 });

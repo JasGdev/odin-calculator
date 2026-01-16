@@ -10,6 +10,17 @@ Extra from Odin Project
 3. button for decimal .
 4. backspace
 5. keyboard support
+    
+        As is (1 to 0, -, +, /, x, .)
+
+        = (Enter, =)
+        <= (Backspace)
+        C (c key)
+        +- (n key)
+        M (m key)
+
+
+
 
 Extra
 
@@ -18,11 +29,11 @@ Extra
 
     Use button color to show storage status
 
-    Stores when empty
+    Stores when empty whatever is on display
 
     When full
 
-        Output if (Left click) or (A key)
+        Only outputs when in display value is empty
 
-        Store if (Right click) or (S key)
+        Otherwise stores
 
