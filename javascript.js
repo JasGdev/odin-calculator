@@ -57,6 +57,7 @@ let tempValue = '';
 let storing = false;
 let storedValue = 0;
 
+
 function overflowFix(){
 // for overflow
     if (historyDisplay.textContent.length > 37){
@@ -81,6 +82,8 @@ function updateState(button){
 
 function clickButtonByClassName(name){
     btn = document.getElementsByClassName(name)[0]
+
+    // why does memory button cause a endless loop here when it calls it here 
     btn.dispatchEvent(new Event('click'))
     btn.classList.add("is-active");
     setTimeout(() => {
@@ -97,6 +100,8 @@ function logState(){
                     console.log("num1:", num1);
                     console.log("num2:", num2);
                     console.log("op:", op);
+                    console.log("storing:", storing);
+                    console.log("storedValue:", storedValue);
                     console.groupEnd();
 }
 
@@ -116,14 +121,22 @@ function inputUpdate(){
                         } 
                     else if (state == 3) {
                         // coming from result
-                        clickButtonByClassName('clearBtn');
+                        console.log('CLEAR')
+                        
+                        // clear except memory
+                        display.textContent = '';
+                        display.style.fontSize = '40px';
+                        historyDisplay.textContent = '';
+                        historyDisplay.style.fontSize = "20px"
+                        state = 1;
+                        num1 = 0;
+                        num2 = 0;
+                        tempValue = '';
+                        op = '';
+                        
                         updateState(button);
                         logState();
-                        }
-                    
-                    
-                    
-                    
+                        }       
             })
             
         } 
@@ -182,6 +195,13 @@ function inputUpdate(){
                 num2 = 0;
                 tempValue = '';
                 op = '';
+                
+
+                // resetting memory
+                storedValue = 0;
+                storing = false;
+                const memBtn = document.querySelector('.memBtn');
+                memBtn.classList.remove('storing');
                 logState();
             }) 
         }
@@ -210,7 +230,16 @@ function inputUpdate(){
                     console.log(tempValue)
                     console.log(typeof tempValue)
                 } else{
-                    clickButtonByClassName('clearBtn');
+                    //want clear without button press behavior
+                    display.textContent = '';
+                    display.style.fontSize = '40px';
+                    historyDisplay.textContent = '';
+                    historyDisplay.style.fontSize = "20px"
+                    state = 1;
+                    num1 = 0;
+                    num2 = 0;
+                    tempValue = '';
+                    op = '';
                 }
                 logState();
             }) 
@@ -225,21 +254,37 @@ function inputUpdate(){
                 // store  if not 
         else if (button.classList.contains('memBtn')){
             button.addEventListener('click', () => {
-                if (!storing && tempValue == ''){
-
-                }
-                clickButtonByClassName('memBtn');
-                logState();
-                button.classList.add("storing");
-            }) 
+                handleMemoryPress(button);
+            });
+            logState();
         }
         
     })
-
     
     
 
 }
+
+
+function handleMemoryPress(button) {
+    if (!storing && tempValue == '') {
+        storedValue = 0;
+        storing = true;
+    } 
+    else if (!storing || tempValue != '') {
+        storedValue = tempValue;
+        storing = true;
+    } 
+    else if (storing && tempValue == '') {
+        tempValue = storedValue;
+        display.textContent += storedValue;
+    }
+
+    button.classList.add("storing");
+    logState();
+}
+
+
 //#endregion
 
 //#region Calculator UI
@@ -328,6 +373,9 @@ document.addEventListener("keydown", (e) => {
         case 'Backspace': 
             clickButtonByClassName('backBtn');
             break
+        case 'm':
+            handleMemoryPress(document.querySelector('.memBtn'));
+            break;
 
 
         }
