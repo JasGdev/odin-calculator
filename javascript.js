@@ -26,7 +26,7 @@ function operator(n1, op, n2){
             return add(n1, n2)
         case '-':
             return subtract(n1, n2)
-        case 'x':
+        case 'X':
             return multiply(n1, n2)
         case '/':
             return divide(n1, n2)
@@ -78,8 +78,15 @@ function updateState(button){
 }
 
 function clickButtonByClassName(name){
-    document.getElementsByClassName(name)[0].dispatchEvent(new Event('click'))
+    btn = document.getElementsByClassName(name)[0]
+    btn.dispatchEvent(new Event('click'))
+    btn.classList.add("is-active");
+    setTimeout(() => {
+            btn.classList.remove("is-active");
+            }, 100);
 }
+
+
 
 function logState(){
     console.group("Calculator State");
@@ -236,8 +243,8 @@ container.appendChild(display);
 container.appendChild(buttonArea);
 
 const buttons = [
-  "MS", "C", "<=", "/",
-  "7", "8", "9", "x",
+  "M", "C", "<=", "/",
+  "7", "8", "9", 'X',
   "4", "5", "6", "-",
   "1", "2", "3", "+",
   "±", "0", ".", "="
@@ -245,15 +252,16 @@ const buttons = [
 
 buttons.forEach(val => {
     const btn = document.createElement('button');
+    btn.classList.add(val)
     if (Number.isInteger(Number(val))){
-        btn.classList.add('numBtn');
-    } else if (['/', 'x', '-', '+'].includes(val)){
+        btn.classList.add('numBtn');btn.classList.add('numBtn');
+    } else if (['/', 'X', '-', '+'].includes(val)){
         btn.classList.add('opBtn')
     } else if (val === '='){
         btn.classList.add('eqBtn')
     } else if (val === 'C') {
         btn.classList.add('clearBtn')
-    } else if (val === 'MS') {
+    } else if (val === 'M') {
         btn.classList.add('memBtn')
     } else if (val === '<=') {
         btn.classList.add('backBtn')
@@ -272,13 +280,43 @@ inputUpdate();
 //#endregion
 
 //#region Keyboard Support
+
+let sameMapping = '1234567890CM/x-+.'.split('');
+
+
 document.addEventListener("keydown", (e) => {
-  switch (e.key) {
-    case "Enter":
-    case "=":
-      handleEquals();
-      e.preventDefault();
-      break;
+    // stop clicking the focused button
+    if (e.key === "Enter" || e.key === " ") {
+        
+        e.preventDefault();
     }
+
+
+    switch (e.key) {
+        case "Enter":
+        case "=":
+            clickButtonByClassName('eqBtn');
+            break;
+
+        case 'n': 
+            clickButtonByClassName('minusPosBtn');
+            break
+        case 'Backspace': 
+            clickButtonByClassName('backBtn');
+            break
+
+
+        }
+    sameMapping.forEach(val => {
+        pressedKey = e.key.toLowerCase()
+        if (pressedKey == val.toLowerCase()){
+            clickButtonByClassName(pressedKey.toUpperCase())
+            
+          
+
+        }
+    })
+
+    
 }
 )
