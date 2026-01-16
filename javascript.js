@@ -27,7 +27,7 @@ function operator(n1, op, n2){
             return add(n1, n2)
         case '-':
             return subtract(n1, n2)
-        case '*':
+        case 'x':
             return multiply(n1, n2)
         case '/':
             return divide(n1, n2)
@@ -97,11 +97,11 @@ function inputUpdate(){
                     state = 1;
                     num2 = Number(tempValue)
                     
-                    logState();
+                    
                     let result = operator(num1, op, num2);
-                    console.log(result)
                     // perform operation
                     display.textContent = result;
+                    let historyDisplay = `${num1} ${op} ${num2} =`;
 
                     // reset op, num2 and set num 1 = operation result
                     num1 = result;
@@ -109,6 +109,8 @@ function inputUpdate(){
                     op = '';
                     tempValue = num1;
                 }
+                logState();
+                console.log(historyDisplay)
                 
             }) 
         } 
