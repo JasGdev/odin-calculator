@@ -21,20 +21,16 @@ function divide(a, b) {
 
 //#region Logic Implementation
 
-function operator(op, n1, n2){
+function operator(n1, op, n2){
     switch (op){
         case '+':
-            add(n1, n2)
-            break
+            return add(n1, n2)
         case '-':
-            subtract(n1, n2)
-            break
+            return subtract(n1, n2)
         case '*':
-            multiply(n1, n2)
-            break
+            return multiply(n1, n2)
         case '/':
-            divide(n1, n2)
-            break
+            return divide(n1, n2)
     }
 }
 let num1 = 0;
@@ -100,16 +96,20 @@ function inputUpdate(){
                 if (state == 2 && tempValue != ''){
                     state = 1;
                     num2 = Number(tempValue)
+                    
+                    logState();
+                    let result = operator(num1, op, num2);
+                    console.log(result)
                     // perform operation
-                    display.textContent = num1 + num2;
+                    display.textContent = result;
 
                     // reset op, num2 and set num 1 = operation result
-                    num1 = num1 + num2;
+                    num1 = result;
                     num2 = 0;
                     op = '';
                     tempValue = num1;
                 }
-                logState();
+                
             }) 
         } 
         else if (button.classList.contains('clearBtn')){
