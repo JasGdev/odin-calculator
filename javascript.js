@@ -90,7 +90,24 @@ function clickButtonByClassName(name){
             btn.classList.remove("is-active");
             }, 100);
 }
+// memory button logic
+function handleMemoryPress(button) {
+    if (!storing && tempValue == '') {
+        storedValue = 0;
+        storing = true;
+    } 
+    else if (!storing || tempValue != '') {
+        storedValue = tempValue;
+        storing = true;
+    } 
+    else if (storing && tempValue == '') {
+        tempValue = storedValue;
+        display.textContent += storedValue;
+    }
 
+    button.classList.add("storing");
+    logState();
+}
 
 
 function logState(){
@@ -175,7 +192,7 @@ function inputUpdate(){
                     num1 = result;
                     num2 = 0;
                     op = '';
-                    tempValue = num1;
+                    tempValue = String(num1);
                     
                     overflowFix()
                 }
@@ -258,6 +275,27 @@ function inputUpdate(){
             });
             logState();
         }
+
+        // minus pos implementation
+            // works in all states as long as not empty
+                // if there is no - in the text
+                    // if not empty simply update display and value by adding - 
+                // if there is remove it
+
+        else if (button.classList.contains('minusPosBtn')){
+            button.addEventListener('click', () => {
+                logState();
+                if (tempValue != '' && !tempValue.includes('-')){
+                        display.textContent =  '-' + display.textContent;
+                        tempValue = '-' + tempValue;
+                } else if (tempValue != '' && tempValue.includes('-')){
+                        display.textContent =  display.textContent.slice(1);
+                        tempValue = tempValue.slice(1);
+
+                }
+            });
+            logState();
+        }
         
     })
     
@@ -266,23 +304,6 @@ function inputUpdate(){
 }
 
 
-function handleMemoryPress(button) {
-    if (!storing && tempValue == '') {
-        storedValue = 0;
-        storing = true;
-    } 
-    else if (!storing || tempValue != '') {
-        storedValue = tempValue;
-        storing = true;
-    } 
-    else if (storing && tempValue == '') {
-        tempValue = storedValue;
-        display.textContent += storedValue;
-    }
-
-    button.classList.add("storing");
-    logState();
-}
 
 
 //#endregion
@@ -376,8 +397,6 @@ document.addEventListener("keydown", (e) => {
         case 'm':
             handleMemoryPress(document.querySelector('.memBtn'));
             break;
-
-
         }
     sameMapping.forEach(val => {
         pressedKey = e.key.toLowerCase()
