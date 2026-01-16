@@ -1,20 +1,3 @@
-let num1 = 0;
-let num2 = 0;
-let op = '';
-
-// State logic
-    // 1 : currently inputting num1
-        // from here can only accept operators and numbers
-    // 2 : currently inputting num2
-        // from here can only accept equals and numbers
-
-    //State transitions
-        // operator => 2
-        // equals, clear => 1
-
-let state = 1;
-let tempValue = '';
-
 //#region Calculation Functions
 function add(a, b) {
 	return a + b;
@@ -51,7 +34,25 @@ function operator(op, n1, n2){
 
 //#endregion
 
-//#region Calculator Functions
+//#region Logic Implementation
+let num1 = 0;
+let num2 = 0;
+let op = '';
+
+// State logic
+    // 1 : currently inputting num1
+        // from here can only accept operators and numbers
+    // 2 : currently inputting num2
+        // from here can only accept equals and numbers
+
+    //State transitions
+        // operator => 2
+        // equals, clear => 1
+
+let state = 1;
+let tempValue = '';
+
+
 function logState(){
     console.group("Calculator State");
                     console.log("state:", state);
@@ -84,7 +85,10 @@ function inputUpdate(){
                 if (state == 1){
                     display.textContent += button.textContent;
                     state = 2;
+                    num1 = Number(tempValue)
+                    op = button.textContent
                     tempValue = '';
+                    
                 }
                 logState();
             }) 
@@ -94,6 +98,7 @@ function inputUpdate(){
                 if (state == 2 && tempValue != ''){
                     display.textContent += button.textContent;
                     state = 1;
+                    num2 = Number(tempValue)
                     tempValue = '';
                 }
                 logState();
@@ -103,6 +108,8 @@ function inputUpdate(){
             button.addEventListener('click', () => {
                 display.textContent = ''
                 state = 1;
+                num1 = 0;
+                num2 = 0;
                 tempValue = '';
                 logState();
             }) 
@@ -114,6 +121,7 @@ function inputUpdate(){
     
 
 }
+//#endregion
 
 
 
