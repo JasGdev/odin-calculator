@@ -65,14 +65,18 @@ function inputUpdate(){
         } 
         else if (button.classList.contains('opBtn')){
             button.addEventListener('click', () => {
-                display.textContent += button.textContent;
+                if (state == 1){
+                    display.textContent += button.textContent;
+                }
                 state = 2;
                 console.log(state)
             }) 
         } 
         else if (button.classList.contains('eqBtn')){
             button.addEventListener('click', () => {
-                display.textContent +=  button.textContent;
+                if (state == 2){
+                    display.textContent += button.textContent;
+                }
                 state = 1;
                 console.log(state)
             }) 
@@ -95,8 +99,6 @@ function inputUpdate(){
 //#endregion
 
 //#region Calculator UI
-
-    // create calculator layout 
     // 1 div on top for display
     // 1 div on bottom for buttons
     // wrap 4 x 4 buttons 
@@ -134,7 +136,7 @@ buttons.forEach(val => {
     buttonArea.appendChild(btn);
 });
 
-display.textContent = '1221';
+display.textContent = '';
 
 inputUpdate();
 //#endregion
