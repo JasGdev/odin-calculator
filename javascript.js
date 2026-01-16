@@ -60,26 +60,28 @@ function inputUpdate(){
         if (button.classList.contains('numBtn')){
                 button.addEventListener('click', () => {
                     display.textContent +=  button.textContent;
-                    if (state == 1){
-                        
-                    } else if (state == 2){
-
-                    }
+                    console.log(state)
             })
         } 
         else if (button.classList.contains('opBtn')){
             button.addEventListener('click', () => {
                 display.textContent += button.textContent;
+                state = 2;
+                console.log(state)
             }) 
         } 
         else if (button.classList.contains('eqBtn')){
             button.addEventListener('click', () => {
                 display.textContent +=  button.textContent;
+                state = 1;
+                console.log(state)
             }) 
         } 
         else if (button.classList.contains('clearBtn')){
             button.addEventListener('click', () => {
                 display.textContent = ''
+                state = 1;
+                console.log(state)
             }) 
         }
         
