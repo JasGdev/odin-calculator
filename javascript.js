@@ -36,11 +36,11 @@ function operator(op, n1, n2){
     }
 }
 
-// updates num1, num2 and op as the buttons are clicked
-    //also updates the display
-    //display text format is `{num1} {op} {num2} = {operator(op, num1, num2}' 
-        //when equal sign or another operator is clicked 
-            // evaluate the expression set n1 = result, all other black
+    // updates num1, num2 and op as the buttons are clicked
+        //also updates the display
+        //display text format is `{num1} {op} {num2} = {operator(op, num1, num2}' 
+            //when equal sign or another operator is clicked 
+                // evaluate the expression set n1 = result, all other black
 function inputUpdate(){
     const buttons = document.querySelectorAll('button');
     buttons.forEach(button => {
@@ -76,7 +76,7 @@ function inputUpdate(){
 
 //#region Calculator UI
 
-// create calculator layout 
+    // create calculator layout 
     // 1 div on top for display
     // 1 div on bottom for buttons
     // wrap 4 x 4 buttons 
