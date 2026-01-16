@@ -2,6 +2,19 @@ let num1;
 let num2;
 let op;
 
+// State logic
+    // 1 : currently inputting num1
+        // from here can only accept operators and numbers
+    // 2 : currently inputting num2
+        // from here can only accept equals and numbers
+
+    //State transitions
+        // operator => 2
+        // equals, clear => 1
+
+let state = 1;
+let tempValue = '';
+
 //#region Calculator Functions
 function add(a, b) {
 	return a + b;
@@ -47,6 +60,11 @@ function inputUpdate(){
         if (button.classList.contains('numBtn')){
                 button.addEventListener('click', () => {
                     display.textContent +=  button.textContent;
+                    if (state == 1){
+                        
+                    } else if (state == 2){
+
+                    }
             })
         } 
         else if (button.classList.contains('opBtn')){
